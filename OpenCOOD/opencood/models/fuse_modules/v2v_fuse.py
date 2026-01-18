@@ -98,7 +98,7 @@ class V2VNetFusion(nn.Module):
         )
         self.mlp = nn.Linear(in_channels, in_channels)
 
-    def regroup(x: Tensor, record_len: Tensor) -> List[Tensor]:
+    def regroup(self, x: Tensor, record_len: Tensor) -> List[Tensor]:
         """
         Split concatenated tensor into per-sample list.
 

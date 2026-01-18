@@ -10,7 +10,7 @@ from numpy.typing import NDArray
 from opencood.utils import pcd_utils
 from typing import Dict, Any
 
-class BasePreprocessor:
+class BasePreprocessor(object):
     """
     Basic Lidar pre-processor.
 

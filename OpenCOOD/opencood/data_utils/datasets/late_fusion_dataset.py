@@ -11,6 +11,7 @@ import random
 import logging
 from collections import OrderedDict
 
+import numpy.typing as npt
 import numpy as np
 import torch
 import opencood.data_utils.datasets
@@ -94,7 +95,7 @@ class LateFusionDataset(basedataset.BaseDataset):
         return reformat_data_dict
 
     @staticmethod
-    def __wrap_ndarray(ndarray: np.ndarray) -> Dict[str, Any]:
+    def __wrap_ndarray(ndarray: npt.NDArray) -> Dict[str, Any]:
         """
         Convert a numpy array to a serializable dictionary.
         

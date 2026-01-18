@@ -7,6 +7,7 @@ backbone for efficient 3D object detection.
 """
 
 from typing import Any
+from typing import Dict
 
 import torch
 import torch.nn as nn
@@ -76,7 +77,7 @@ class Second(nn.Module):
         self.cls_head = nn.Conv2d(256 * 2, args["anchor_number"], kernel_size=1)
         self.reg_head = nn.Conv2d(256 * 2, 7 * args["anchor_num"], kernel_size=1)
 
-    def forward(self, data_dict: dict[str, Any]) -> dict[str, torch.Tensor]:
+    def forward(self, data_dict: Dict[str, Any]) -> Dict[str, torch.Tensor]:
         """
         Forward pass of the Second model.
 

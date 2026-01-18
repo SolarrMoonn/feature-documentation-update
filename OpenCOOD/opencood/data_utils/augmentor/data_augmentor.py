@@ -12,7 +12,7 @@ from typing import Dict, Any, List, Optional, Callable, Union
 from opencood.data_utils.augmentor import augment_utils
 
 
-class DataAugmentor:
+class DataAugmentor(object):
     """
     Data Augmentor.
 

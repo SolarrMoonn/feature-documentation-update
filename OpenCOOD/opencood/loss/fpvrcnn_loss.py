@@ -51,10 +51,10 @@ class FpvrcnnLoss(nn.Module):
     def __init__(self, args):
         super(FpvrcnnLoss, self).__init__()
         self.ciassd_loss = CiassdLoss(args["stage1"])
-        self.cls: Dict[str, float] = args["stage2"]["cls"]
-        self.reg: Dict[str, float] = args["stage2"]["reg"]
-        self.iou: Dict[str, float] = args["stage2"]["iou"]
-        self.loss_dict: Dict[str, Tensor] = {}
+        self.cls = args["stage2"]["cls"]
+        self.reg = args["stage2"]["reg"]
+        self.iou = args["stage2"]["iou"]
+        self.loss_dict = {}
 
     def forward(self, output_dict: Dict[str, Any], label_dict: Dict[str, Any]) -> Tensor:
         """
@@ -242,12 +242,8 @@ def weighted_sigmoid_binary_cross_entropy(
     if weights is not None:
         weights = weights.unsqueeze(-1)
     if class_indices is not None:
-        weights = weights * indices_to_dense_vector(
-            class_indices, preds.shape[2]
-        ).view(1, 1, -1).type_as(preds)
-    per_entry_cross_ent = nn.functional.binary_cross_entropy_with_logits(
-        preds, tgts, weight=weights, reduction='none'
-    )
+        weights *= indices_to_dense_vector(class_indices, preds.shape[2]).view(1, 1, -1).type_as(preds)
+    per_entry_cross_ent = nn.functional.binary_cross_entropy_with_logits(preds, tgts, weights)
     return per_entry_cross_ent
 
 
@@ -288,6 +284,6 @@ def indices_to_dense_vector(
     >>> indices_to_dense_vector(indices, size=6)
     tensor([0., 1., 0., 1., 0., 1.])
     """
-    dense = torch.zeros(size, dtype=dtype, device=indices.device).fill_(default_value)
+    dense = torch.zeros(size).fill_(default_value)
     dense[indices] = indices_value
     return dense

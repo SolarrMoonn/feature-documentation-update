@@ -8,6 +8,7 @@ to voxel representations using the spconv library (supports both v1.x and v2.x).
 import sys
 
 import numpy as np
+import numpy.typing as npt
 import torch
 from cumm import tensorview as tv
 from opencood.data_utils.pre_processor.base_preprocessor import BasePreprocessor
@@ -91,7 +92,7 @@ class SpVoxelPreprocessor(BasePreprocessor):
                 max_num_voxels=self.max_voxels,
             )
 
-    def preprocess(self, pcd_np: np.ndarray) -> Dict[str, np.ndarray]:
+    def preprocess(self, pcd_np: npt.NDArray) -> Dict[str, npt.NDArray]:
         """
         Convert point cloud to sparse voxel representation.
         
@@ -167,7 +168,7 @@ class SpVoxelPreprocessor(BasePreprocessor):
             sys.exit("Batch has to be a list or a dictionary")
 
     @staticmethod
-    def collate_batch_list(batch: List[Dict[str, np.ndarray]]) -> Dict[str, torch.Tensor]:
+    def collate_batch_list(batch: List[Dict[str, npt.NDArray]]) -> Dict[str, torch.Tensor]:
         """
         Collate batch when input is a list of dictionaries.
         
@@ -205,7 +206,7 @@ class SpVoxelPreprocessor(BasePreprocessor):
         return {"voxel_features": voxel_features, "voxel_coords": voxel_coords, "voxel_num_points": voxel_num_points}
 
     @staticmethod
-    def collate_batch_dict(batch: Dict[str, List[np.ndarray]]) -> Dict[str, torch.Tensor]:
+    def collate_batch_dict(batch: Dict[str, List[npt.NDArray]]) -> Dict[str, torch.Tensor]:
         """
         Collate batch when input is a dictionary with lists as values.
         

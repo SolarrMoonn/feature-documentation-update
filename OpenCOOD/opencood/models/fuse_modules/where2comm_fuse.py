@@ -246,7 +246,7 @@ class Where2comm(nn.Module):
 
         self.naive_communication = Communication(args["communication"])
 
-    def regroup(x: torch.Tensor, record_len: torch.Tensor) -> List[torch.Tensor]:
+    def regroup(self, x: torch.Tensor, record_len: torch.Tensor) -> List[torch.Tensor]:
         """
         Regroup features based on record lengths.
 

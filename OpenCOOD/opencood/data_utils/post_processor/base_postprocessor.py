@@ -7,6 +7,7 @@ bounding box processing.
 """
 
 import numpy as np
+import numpy.typing as npt
 import torch
 
 from opencood.utils import box_utils
@@ -115,7 +116,7 @@ class BasePostprocessor(object):
         self,
         cav_contents: List[Dict[str, Any]],
         reference_lidar_pose: List[float]
-    ) -> Tuple[np.ndarray, np.ndarray, List[Any]]:
+    ) -> Tuple[npt.NDArray, npt.NDArray, List[Any]]:
         """
         Retrieve all objects in a format of (n, 7), where 7 represents
         x, y, z, l, w, h, yaw or x, y, z, h, w, l, yaw.
